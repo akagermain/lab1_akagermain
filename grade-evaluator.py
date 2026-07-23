@@ -28,3 +28,19 @@ def load_csv_data():
         print(f"An error occured while reading the file: {e}")
         sys.exit(1)
 
+def evaluate_grades(data):
+    print("\n=== Processing Grades ===")
+
+    if not data:
+        print("Error: No assignment data found. The CSV file is empty.")
+        sys.exit(1)
+    for record in data:
+        if record['score'] < 0 or record['score'] > 100:
+            print(f"Error: '{record['assignment']}' has an invalid score of "
+                  f"{record['score']}. Scores must be between 0 and 100."
+                  )
+            sys.exit(1)
+        if record['group'] not in ('Formative', 'Summative'):
+            print(f"Error: '{record['assignment']}' has an unkown group"
+                  f"'{record['group']}'. Must be 'Formative' or 'Summative'.")
+            sys.exit(1)
