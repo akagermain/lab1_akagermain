@@ -30,10 +30,10 @@ def load_csv_data():
 
 def evaluate_grades(data):
     print("\n=== Processing Grades ===")
-
     if not data:
         print("Error: No assignment data found. The CSV file is empty.")
         sys.exit(1)
+   # Checking if every score recorded has a valid percentage (0-100)
     for record in data:
         if record['score'] < 0 or record['score'] > 100:
             print(f"Error: '{record['assignment']}' has an invalid score of "
@@ -44,3 +44,17 @@ def evaluate_grades(data):
             print(f"Error: '{record['assignment']}' has an unkown group"
                   f"'{record['group']}'. Must be 'Formative' or 'Summative'.")
             sys.exit(1)
+   # Validating total weights (i.e total has to be 100, summative 40, and Formative 60)
+    total_weight = sum(r['weight'] for r in data)
+    formative_weight = sum(r['weight'] for r in data if r['group'] == 'Formative')
+    summative_weight = sum(r['weight'] for r in data if r['group'] == 'Summative')
+
+    if round(total_weight, 2) != 100:
+        print(f"Error: total weight is {total_weight}, but it must equal exactly 100.")
+        sys.exit(1)
+    if round(formative_weight, 2) != 60:
+        print(f"Error: Formative weight is {formative_weight}, but it must equal exactly 60.")
+        sys.exit(1)
+    if round(summative_weight, 2) != 40:
+        print(f"Error: Summative weight is {summative_weight}, but it must equal exactly 40.")
+        sys.exit(1)
