@@ -70,6 +70,7 @@ def evaluate_grades(data):
 
    # Determining pass and fail status
     status = "PASSED" if formative_pct >= 50 and summative_pct >= 50 else "FAILED"
+
    # Finding failed formative assignments and keeping only the ones with the highest score
     failed_formatives = [r for r in data if r['group'] == 'Formative' and r['score'] < 50]
     resub_candidates = []
@@ -79,3 +80,30 @@ def evaluate_grades(data):
             if r['weight'] > highest_weight:
                 highest_weight = r['weight']
         resub_candidates = [r for r in failed_formatives if r['weight'] == highest_weight]
+
+   # The final decision and resubmission options
+    print("=" * 55)
+    print("GRADE EVALUATION REPORT")
+    print("=" * 55)
+    print(f"Total Weighted Grade : {total_grade:.2f} / 100")
+    print(f"Summative Score      : {summative_pct:.2f}%  (category weight: {summative_weight:.0f})")
+    print(f"Formative Score      : {formative_pct:.2f}%  (category weight: {formative_weight:.0f})")
+    print(f"Final GPA            : {gpa:.2f} / 5.0")
+    print(f"Final Status         : {status}")
+    print("-" * 55)
+
+    if resub_candidates:
+        print("Resubmission Eligible (highest-weight failed Formative assignment(s)):")
+        for r in resub_candidates:
+            print(f"  - {r['assignment']}  (Weight: {r['weight']:.0f}, Score: {r['score']:.0f})")
+    else:
+        print("No Formative assignment failed. No resubmission needed.")
+
+    print("=" * 55)
+
+if __name__ == "__main__":
+    # 1. Load the data
+    course_data = load_csv_data()
+    
+    # 2. Process the features
+    evaluate_grades(course_data)
