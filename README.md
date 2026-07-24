@@ -62,3 +62,14 @@ If the file is missing, empty, contains an out-of-range score, or the weights do
    - Adds a line to `organizer.log` recording the timestamp, the original filename, and the new archived filename
 
 You can run it as many times as you want — every run adds a new entry to `organizer.log` without deleting previous ones.
+
+## Suggested workflow
+```bash
+python3 grade-evaluator.py    # evaluate the current batch of grades (enter grades.csv when prompted)
+./organizer.sh                # archive it and reset grades.csv for the next batch
+```
+
+## How the logic works (short version)
+- Weighted points earned: each assignment contributes `(weight * score) / 100` points.
+- Category percentage: the points earned in a category, divided by that category's total weight, times 100. This is what's checked against the 50% pass rule — not the overall score.
+- Resubmission: only Formative assignments scoring below 50 are considered. Among those, the one(s) with the highest weight are flagged. If two or more failed Formative assignments share the same highest weight, all of them are shown.
