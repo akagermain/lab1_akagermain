@@ -10,12 +10,12 @@ def load_csv_data():
         print(f'Error: The file "{filename}" was not found.')
         sys.exit(1)
 
-    assignment = []
+    assignments = []
 
     try:
         with open(filename, mode='r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
-            for now in reader:
+            for row in reader:
                 # Converts numeric fields into floats for calculations
                 assignments.append({
                     'assignment': row['assignment'],
