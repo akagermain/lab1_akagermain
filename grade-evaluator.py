@@ -68,3 +68,5 @@ def evaluate_grades(data):
     formative_pct = (formative_earned / formative_weight) * 100 if formative_weight else 0
     summative_pct = (summative_earned / summative_weight) * 100 if summative_weight else 0
 
+   # Determining pass and fail status
+    status = "PASSED" if formative_pct >= 50 and summative_pct >= 50 else "FAILED"
