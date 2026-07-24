@@ -30,3 +30,11 @@ mv "$SOURCE_FILE" "$ARCHIVE_DIR/$ARCHIVED_NAME"
 
 # 6. Reset the workspace with a fresh, empty grades.csv
 touch "$SOURCE_FILE"
+
+# 7. Append a record of this run to organizer.log
+echo "$TIMESTAMP | Original: $SOURCE_FILE | Archived as: $ARCHIVE_DIR/$ARCHIVED_NAME" >> "$LOG_FILE"
+
+echo "Archiving complete."
+echo "  -> $SOURCE_FILE archived as $ARCHIVE_DIR/$ARCHIVED_NAME"
+echo "  -> New empty $SOURCE_FILE created"
+echo "  -> Logged to $LOG_FILE"
