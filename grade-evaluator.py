@@ -70,3 +70,12 @@ def evaluate_grades(data):
 
    # Determining pass and fail status
     status = "PASSED" if formative_pct >= 50 and summative_pct >= 50 else "FAILED"
+   # Finding failed formative assignments and keeping only the ones with the highest score
+    failed_formatives = [r for r in data if r['group'] == 'Formative' and r['score'] < 50]
+    resub_candidates = []
+    if failed_formatives:
+        highest_weight = failed_formatives[0]['weight']
+        for r in failed_formatives:
+            if r['weight'] > highest_weight:
+                highest_weight = r['weight']
+        resub_candidates = [r for r in failed_formatives if r['weight'] == highest_weight]
