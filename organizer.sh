@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This file archives the current grades.csv into a timestamped copy inside archive directory to be created
-# Again, it resets grades.csv to a fresh file, and logs every run to organizer.log
+# Again, it resets grades.csv to a fresh empty file, and logs every run to organizer.log
 
 ARCHIVE_DIR="archive"
 LOG_FILE="organizer.log"
