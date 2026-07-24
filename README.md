@@ -39,3 +39,26 @@
 5. The script prints a report: total grade, category percentages, final GPA, PASSED/FAILED status, and any Formative assignment(s) eligible for resubmission.
 
 If the file is missing, empty, contains an out-of-range score, or the weights don't add up correctly, the script prints a clear error message and stops instead of crashing.
+
+## 2. How to run `organizer.sh`
+
+1. Make sure `organizer.sh` is in the same folder as `grades.csv`.
+2. Give it permission to run (only needed once):
+
+   ```bash
+   chmod +x organizer.sh
+   ```
+
+3. Run it:
+
+   ```bash
+   ./organizer.sh
+   ```
+
+4. What happens each time you run it:
+   - Creates an `archive/` folder if it doesn't already exist
+   - Renames the current `grades.csv` with a timestamp (e.g. `grades_20260722-140224.csv`) and moves it into `archive/`
+   - Creates a brand-new, empty `grades.csv` in the current folder
+   - Adds a line to `organizer.log` recording the timestamp, the original filename, and the new archived filename
+
+You can run it as many times as you want — every run adds a new entry to `organizer.log` without deleting previous ones.
