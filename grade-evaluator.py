@@ -44,6 +44,7 @@ def evaluate_grades(data):
             print(f"Error: '{record['assignment']}' has an unkown group"
                   f"'{record['group']}'. Must be 'Formative' or 'Summative'.")
             sys.exit(1)
+
    # Validating total weights (i.e total has to be 100, summative 40, and Formative 60)
     total_weight = sum(r['weight'] for r in data)
     formative_weight = sum(r['weight'] for r in data if r['group'] == 'Formative')
@@ -58,3 +59,12 @@ def evaluate_grades(data):
     if round(summative_weight, 2) != 40:
         print(f"Error: Summative weight is {summative_weight}, but it must equal exactly 40.")
         sys.exit(1)
+   # Calculating the final Grade and GPA
+    formative_earned = sum((r['weight'] * r['score']) / 100 for r in data if r['group'] == 'Formative')
+    summative_earned = sum((r['weight'] * r['score']) / 100 for r in data if r['group'] == 'Summative')
+    total_grade = formative_earned + summative_earned
+    gpa = (total_grade / 100) * 5.0
+
+    formative_pct = (formative_earned / formative_weight) * 100 if formative_weight else 0
+    summative_pct = (summative_earned / summative_weight) * 100 if summative_weight else 0
+
